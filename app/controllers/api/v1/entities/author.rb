@@ -11,7 +11,6 @@ module API
         expose :genre
         expose :created_at
         expose :updated_at
-        # expose :book, using: Entities::Book, as: :book_data
       end
     end
   end

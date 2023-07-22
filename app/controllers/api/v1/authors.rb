@@ -31,9 +31,9 @@ module API
 
         post do
           author = Author.create(
-            title: params[:title],
-            author_id: params[:author_id],
-            data: params[:data]
+            first_name: params[:first_name],
+            last_name: params[:last_name],
+            genre: params[:genre]
           )
           if author.persisted?
             present author, with: Entities::Author
@@ -45,24 +45,32 @@ module API
         route_param :id do
           desc 'Get a specific author'
           get do
-            author = Author.find(params[:id])
-            present author, with: Entities::Author
+            author = Author.includes(:books).find(params[:id])
+            author_data = {
+              id: author.id,
+              first_name: author.first_name,
+              last_name: author.last_name,
+              genre: author.genre,
+              created_at: author.created_at,
+              updated_at: author.updated_at,
+              books_data: author.books.as_json(only: %i[id title genre])
+            }
+
+            present author_data
           end
 
           desc 'Update a author'
           params do
-            optional :title, allow_blank: false, type: String, desc: 'Author title'
-            optional :author_id, allow_blank: false, type: Integer, desc: 'ID of the author author'
-            optional :data, type: Hash do
-              optional :info, type: String, desc: 'Some kind of information about the author'
-            end
+            optional :first_name, allow_blank: false, type: String, desc: 'First name'
+            optional :last_name, allow_blank: false, type: String, desc: 'Last name'
+            optional :genre, type: Integer, desc: 'Genre'
           end
           put do
             author = Author.find(params[:id])
             author.update(
-              title: params[:title],
-              author_id: params[:author_id],
-              data: params[:data]
+              first_name: params[:first_name],
+              last_name: params[:last_name],
+              genre: params[:genre]
             )
             present author, with: Entities::Author
           end

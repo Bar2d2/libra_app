@@ -11,7 +11,7 @@ module API
         expose :author_id
         expose :created_at
         expose :updated_at
-        # expose :author, using: Entities::Author, as: :author_data
+        expose :author, using: Entities::Author, as: :author_data
       end
     end
   end

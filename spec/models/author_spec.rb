@@ -21,5 +21,8 @@ RSpec.describe Author, type: :model do
     context 'books relations' do
       it { should have_many(:books) }
     end
+    context 'genre options' do
+      it { should define_enum_for(:genre) }
+    end
   end
 end

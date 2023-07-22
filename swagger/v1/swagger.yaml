@@ -1,15 +1,15 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Sample Books API
-  description: An example API for managing books
+  title: Libra app - RestfulAPI docs
+  description: An example app documentation in swagger
 servers:
   - url: http://localhost:3000/api/v1
 paths:
   /books:
     get:
       summary: Get a list of books
-      description: Retrieve a paginated list of books from the server
+      description: Retrieve a paginated list of books from the server.
       parameters:
         - name: page
           in: query
@@ -56,9 +56,27 @@ paths:
                       type: string
                       format: date-time
                       description: The date and time the book was last updated
+
+    post:
+      summary: Create a new book
+      description: Endpoint for creating a new book.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
   /books/{id}:
     get:
       summary: Get a specific book by ID
+      description: Retrieve a specific book, with associated author data. ID of the book is required to get a proper response.
       parameters:
         - name: id
           in: path
@@ -67,6 +85,7 @@ paths:
             type: integer
             format: int64
       responses:
+        description: A successful response
         '200':
           description: A successful response with the book details
           content:
@@ -85,6 +104,7 @@ paths:
 
     put:
       summary: Update a book by ID
+      description: Enpoint for updating specific book.
       parameters:
         - name: id
           in: path
@@ -117,6 +137,7 @@ paths:
 
     delete:
       summary: Delete a book by ID
+      description: Enpoint for deleting specific book.
       parameters:
         - name: id
           in: path
@@ -137,7 +158,7 @@ paths:
   /authors:
     get:
       summary: Show all authors with pagination
-      description: Retrieve a paginated list of authors with associated books from the server
+      description: Retrieve a paginated list of authors from the server
       parameters:
         - name: page
           in: query
@@ -150,7 +171,7 @@ paths:
             default: 1
       responses:
         '200':
-          description: OK
+          description: A successful response with the author details
           content:
             application/json:
               schema:
@@ -164,6 +185,7 @@ paths:
                     $ref: '#/components/schemas/PaginationMeta'
     post:
       summary: Create a new author
+      description: Enpoint for createing new author.
       requestBody:
         required: true
         content:
@@ -172,16 +194,15 @@ paths:
               $ref: '#/components/schemas/NewAuthor'
       responses:
         '201':
-          description: Created
+          description: Successful response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-        '422':
-          $ref: '#/components/responses/ValidationFailed'
   /authors/{id}:
     get:
       summary: Get a specific author
+      description: Retrieve a specific author with associated books from the server
       parameters:
         - name: id
           in: path
@@ -200,6 +221,7 @@ paths:
           $ref: '#/components/responses/RecordNotFound'
     put:
       summary: Update a specific author
+      description: Endpoint for updating specific author.
       parameters:
         - name: id
           in: path
@@ -215,17 +237,14 @@ paths:
               $ref: '#/components/schemas/UpdateAuthor'
       responses:
         '200':
-          description: OK
+          description: Successful response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-        '404':
-          $ref: '#/components/responses/RecordNotFound'
-        '422':
-          $ref: '#/components/responses/ValidationFailed'
     delete:
       summary: Delete a specific author
+      description: Endpoint for deleting authors with associated books.
       parameters:
         - name: id
           in: path
@@ -235,7 +254,7 @@ paths:
           description: Author ID
       responses:
         '200':
-          description: OK
+          description: Successful response
           content:
             application/json:
               schema:
@@ -309,7 +328,7 @@ components:
         last_name:
           type: string
         genre:
-          type: string
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -325,7 +344,7 @@ components:
         title:
           type: string
         genre:
-          type: string
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -343,7 +362,7 @@ components:
         last_name:
           type: string
         genre:
-          type: string
+          type: integer
     UpdateAuthor:
       type: object
       properties:
@@ -352,7 +371,7 @@ components:
         last_name:
           type: string
         genre:
-          type: string
+          type: integer
     AuthorWithBooks:
       type: object
       properties:
@@ -364,7 +383,7 @@ components:
         last_name:
           type: string
         genre:
-          type: string
+          type: integer
         created_at:
           type: string
           format: date-time

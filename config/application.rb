@@ -35,5 +35,11 @@ module LibraApp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.middleware.use Rack::Attack
+
+    # Allow 10 requests per second per IP
+    Rack::Attack.throttle("req/ip", limit: 10, period: 1.second) do |req|
+      req.ip
+    end
   end
 end

@@ -4,14 +4,14 @@
 module API
   module V1
     module Entities
-      class Book < Grape::Entity
+      class Author < Grape::Entity
         expose :id
-        expose :title
-        expose :data
-        expose :author_id
+        expose :first_name
+        expose :last_name
+        expose :genre
         expose :created_at
         expose :updated_at
-        # expose :author, using: Entities::Author, as: :author_data
+        # expose :book, using: Entities::Book, as: :book_data
       end
     end
   end

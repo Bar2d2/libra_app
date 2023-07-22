@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'API::V1::Books', type: :request do
-
   def json_response
     JSON.parse(response.body)
   end
@@ -26,9 +25,9 @@ RSpec.describe 'API::V1::Books', type: :request do
 
     context 'with valid attributes' do
       it 'creates a new book' do
-        expect {
+        expect do
           post '/api/v1/books', params: valid_attributes
-        }.to change(Book, :count).by(1)
+        end.to change(Book, :count).by(1)
 
         expect(response).to have_http_status(201)
         expect(json_response).to include('id', 'title', 'data', 'author_id', 'created_at', 'updated_at')
@@ -37,9 +36,9 @@ RSpec.describe 'API::V1::Books', type: :request do
 
     context 'with invalid attributes' do
       it 'does not create a new book' do
-        expect {
+        expect do
           post '/api/v1/books', params: { title: 'Sample Book', author_id: nil }
-        }.not_to change(Book, :count)
+        end.not_to change(Book, :count)
 
         expect(response).to have_http_status(422)
         expect(json_response).to include('error')
@@ -84,9 +83,9 @@ RSpec.describe 'API::V1::Books', type: :request do
     let!(:book) { create(:book) }
 
     it 'deletes the book' do
-      expect {
+      expect do
         delete "/api/v1/books/#{book.id}"
-      }.to change(Book, :count).by(-1)
+      end.to change(Book, :count).by(-1)
 
       expect(response).to have_http_status(200)
       expect(json_response).to include('message')

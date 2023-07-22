@@ -66,7 +66,6 @@ module API
               author_id: params[:author_id],
               data: params[:data]
             )
-            { message: 'Book was updated successfully' }
             present book, with: Entities::Book
           end
 

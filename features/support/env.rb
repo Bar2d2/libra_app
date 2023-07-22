@@ -3,7 +3,9 @@ require "cucumber/rspec/doubles"
 require "capybara-screenshot/cucumber"
 require "email_spec/cucumber"
 require 'database_cleaner/active_record'
+require 'rack/test'
 
+World(Rack::Test::Methods)
 World(FactoryBot::Syntax::Methods)
 
 ActionController::Base.allow_rescue = false

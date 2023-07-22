@@ -3,30 +3,23 @@
 require 'rails_helper'
 
 RSpec.describe Author, type: :model do
-  describe 'model validation' do
-    context 'when author has valid attributes' do
-      it 'has no errors'
+  describe 'validation' do
+    subject { build(:author) }
+
+    context 'presence of the first name' do
+      it { should validate_presence_of(:first_name) }
     end
-    context 'when author without a first_name' do
-      it 'got validation error'
+    context 'first name length' do
+      it { should validate_length_of(:first_name) }
     end
-    context 'when author without a last_name' do
-      it 'got validation error'
+    context 'presence of the last name' do
+      it { should validate_presence_of(:last_name) }
     end
-    context 'when genre is selected' do
-      it 'has genre selected'
+    context 'last name length' do
+      it { should validate_length_of(:last_name) }
     end
-    context 'when genre is not selected' do
-      it 'has no genre'
-    end
-    context 'when author has no book' do
-      it 'has no book relations'
-    end
-    context 'when author has one book' do
-      it 'has one book relation'
-    end
-    context 'when author has many books' do
-      it 'has many book relations'
+    context 'books relations' do
+      it { should have_many(:books) }
     end
   end
 end

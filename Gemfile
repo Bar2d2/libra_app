@@ -26,6 +26,7 @@ end
 
 group :development do
   gem 'brakeman'
+  gem 'faker'
   gem 'hotwire-livereload'
   gem 'listen'
   gem 'reek'

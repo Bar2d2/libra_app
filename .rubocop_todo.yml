@@ -65,7 +65,7 @@ Lint/UnusedBlockArgument:
 # Configuration parameters: CountComments, CountAsOne, AllowedMethods, AllowedPatterns.
 # AllowedMethods: refine
 Metrics/BlockLength:
-  Max: 26
+  Max: 45
 
 # Offense count: 1
 # Configuration parameters: AllowedMethods, AllowedPatterns.
@@ -85,15 +85,7 @@ Metrics/PerceivedComplexity:
 # Offense count: 6
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/controllers/static_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/static_helper.rb'
-    - 'app/mailers/application_mailer.rb'
-    - 'app/models/application_record.rb'
-    - 'config/application.rb'
+  Enabled: false
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).

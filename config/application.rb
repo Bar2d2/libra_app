@@ -38,8 +38,6 @@ module LibraApp
     config.middleware.use Rack::Attack
 
     # Allow 10 requests per second per IP
-    Rack::Attack.throttle("req/ip", limit: 10, period: 1.second) do |req|
-      req.ip
-    end
+    Rack::Attack.throttle('req/ip', limit: 10, period: 1.second, &:ip)
   end
 end

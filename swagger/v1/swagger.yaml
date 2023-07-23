@@ -155,6 +155,67 @@ paths:
                 properties:
                   message:
                     type: string
+  /api/v1/books/{id}/upload_cover_image:
+    post:
+      summary: Upload a cover image for a book
+      description: |
+        Upload a cover image for a book. The image will be associated with the book
+        identified by its unique `id`. The image will be stored in an S3 bucket, and
+        the URL to access the image will be saved in the `cover_image_url` attribute
+        of the book.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the book to upload the cover image for.
+          schema:
+            type: integer
+        - name: cover_image
+          in: formData
+          required: true
+          description: The cover image file to upload.
+          schema:
+            type: file
+      responses:
+        '200':
+          description: Successful response with the cover image URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A message indicating the success of the upload.
+                  cover_image_url:
+                    type: string
+                    description: The public URL to access the uploaded cover image.
+        '422':
+          description: Validation error. Unable to upload the cover image.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error message.
+                  details:
+                    type: string
+                    description: Additional details about the error.
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error message.
+                  details:
+                    type: string
+                    description: Additional details about the error.
   /authors:
     get:
       summary: Show all authors with pagination

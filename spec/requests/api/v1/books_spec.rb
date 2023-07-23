@@ -91,4 +91,41 @@ RSpec.describe 'API::V1::Books', type: :request do
       expect(json_response).to include('message')
     end
   end
+
+  describe 'POST /api/v1/books/:id/upload_cover_image' do
+    let!(:book) { create(:book) }
+
+    context 'with valid parameters' do
+      let(:file_path) { Rails.root.join('spec', 'fixtures', 'book_cover.jpg') }
+
+      it 'uploads the cover image and returns the cover_image_url' do
+        file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
+        post "/api/v1/books/#{book.id}/upload_cover_image", params: { cover_image: file }
+
+        expect(response).to have_http_status(201)
+        expect(JSON.parse(response.body)).to include('message' => 'Cover image uploaded successfully')
+
+        book.reload
+        expect(book.cover_image_url).to be_present
+      end
+    end
+
+    context 'with invalid parameters' do
+      it 'returns a validation error if no file is attached' do
+        post "/api/v1/books/#{book.id}/upload_cover_image", params: {}
+
+        expect(response).to have_http_status(422)
+        expect(JSON.parse(response.body)).to include('error' => 'Validation errors')
+      end
+
+      it 'returns an error if the book ID does not exist' do
+        file_path = Rails.root.join('spec', 'fixtures', 'book_cover.jpg')
+        file = Rack::Test::UploadedFile.new(file_path, 'image/jpeg')
+        post "/api/v1/books/#{book.id + 100}/upload_cover_image", params: { cover_image: file }
+
+        expect(response).to have_http_status(404)
+        expect(JSON.parse(response.body)).to include('error' => 'Record not found')
+      end
+    end
+  end
 end

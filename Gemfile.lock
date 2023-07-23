@@ -69,6 +69,22 @@ GEM
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.791.0)
+    aws-sdk-core (3.178.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.71.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.131.0)
+      aws-sdk-core (~> 3, >= 3.177.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.6)
+    aws-sigv4 (1.6.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     backport (1.2.0)
     benchmark (0.2.1)
     bindex (0.8.1)
@@ -95,6 +111,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     concurrent-ruby (1.2.2)
+    content_disposition (1.0.0)
     crass (1.0.6)
     cssbundling-rails (1.2.0)
       railties (>= 6.0.0)
@@ -138,6 +155,8 @@ GEM
     database_cleaner-core (2.0.1)
     date (3.3.3)
     diff-lcs (1.5.0)
+    down (5.4.1)
+      addressable (~> 2.8)
     dry-core (1.0.0)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
@@ -165,6 +184,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    fastimage (2.2.7)
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -187,10 +207,14 @@ GEM
     htmlentities (4.3.4)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     jaro_winkler (1.5.6)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     jsbundling-rails (1.1.2)
       railties (>= 6.0.0)
     json (2.6.3)
@@ -221,6 +245,7 @@ GEM
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
+    mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.18.1)
     msgpack (1.7.2)
@@ -363,6 +388,8 @@ GEM
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
@@ -371,6 +398,9 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
+    shrine (3.5.0)
+      content_disposition (~> 1.0)
+      down (~> 5.1)
     solargraph (0.49.0)
       backport (~> 1.2)
       benchmark
@@ -432,6 +462,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  aws-sdk-s3
   bootsnap
   brakeman
   bundle-audit
@@ -443,14 +474,18 @@ DEPENDENCIES
   email_spec
   factory_bot_rails
   faker
+  fastimage
   grape
   grape-entity
   grape-pagy
   hotwire-livereload
+  image_processing
   jbuilder
   jsbundling-rails
   launchy
   listen
+  marcel
+  mini_magick
   pg (~> 1.1)
   puma (~> 5.0)
   pundit
@@ -465,6 +500,7 @@ DEPENDENCIES
   rubocop-rspec
   selenium-webdriver
   shoulda-matchers
+  shrine
   solargraph
   sprockets-rails
   stimulus-rails

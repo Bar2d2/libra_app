@@ -5,23 +5,29 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.0'
 
+gem 'aws-sdk-s3'
 gem 'bootsnap', require: false
+gem 'bundle-audit'
 gem 'cssbundling-rails'
+gem 'fastimage'
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-pagy'
+gem 'image_processing'
 gem 'jbuilder'
 gem 'jsbundling-rails'
+gem 'marcel'
+gem 'mini_magick'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+gem 'pundit'
+gem 'rack-attack'
 gem 'rails', '~> 7.0.6'
 gem 'rswag'
+gem 'shrine'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'rack-attack'
-gem 'bundle-audit'
-gem 'pundit'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do

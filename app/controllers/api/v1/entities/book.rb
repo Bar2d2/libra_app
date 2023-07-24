@@ -11,7 +11,7 @@ module API
         expose :author_id
         expose :created_at
         expose :updated_at
-        expose :cover_image_url
+        expose :cover
         expose :author, using: Entities::Author, as: :author_data
       end
     end

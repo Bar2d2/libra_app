@@ -101,7 +101,6 @@ paths:
                 properties:
                   error:
                     type: string
-
     put:
       summary: Update a book by ID
       description: Enpoint for updating specific book.
@@ -134,7 +133,6 @@ paths:
                 properties:
                   error:
                     type: string
-
     delete:
       summary: Delete a book by ID
       description: Enpoint for deleting specific book.
@@ -155,30 +153,31 @@ paths:
                 properties:
                   message:
                     type: string
-  /api/v1/books/{id}/upload_cover_image:
+  /books/{id}/upload_cover:
     post:
       summary: Upload a cover image for a book
-      description: |
-        Upload a cover image for a book. The image will be associated with the book
-        identified by its unique `id`. The image will be stored in an S3 bucket, and
-        the URL to access the image will be saved in the `cover_image_url` attribute
-        of the book.
+      description: Upload a cover image for a specific book identified by ID.
       parameters:
         - name: id
           in: path
           required: true
-          description: The ID of the book to upload the cover image for.
           schema:
             type: integer
-        - name: cover_image
-          in: formData
-          required: true
-          description: The cover image file to upload.
-          schema:
-            type: file
+            format: int64
+          description: ID of the book to upload the cover image
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cover:
+                  type: string
+                  format: binary
       responses:
         '200':
-          description: Successful response with the cover image URL.
+          description: A successful response indicating the cover image was uploaded successfully
           content:
             application/json:
               schema:
@@ -186,25 +185,10 @@ paths:
                 properties:
                   message:
                     type: string
-                    description: A message indicating the success of the upload.
-                  cover_image_url:
-                    type: string
-                    description: The public URL to access the uploaded cover image.
-        '422':
-          description: Validation error. Unable to upload the cover image.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: The error message.
-                  details:
-                    type: string
-                    description: Additional details about the error.
+        '404':
+          $ref: '#/components/responses/RecordNotFound'
         '500':
-          description: Internal server error.
+          description: Failed to upload cover image
           content:
             application/json:
               schema:
@@ -212,10 +196,6 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: The error message.
-                  details:
-                    type: string
-                    description: Additional details about the error.
   /authors:
     get:
       summary: Show all authors with pagination
@@ -278,8 +258,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthorWithBooks'
-        '404':
-          $ref: '#/components/responses/RecordNotFound'
     put:
       summary: Update a specific author
       description: Endpoint for updating specific author.
@@ -347,7 +325,14 @@ components:
         updated_at:
           type: string
           format: date-time
-
+    UploadCoverImageRequest:
+      type: object
+      required:
+        - cover
+      properties:
+        cover:
+          type: string
+          format: binary
     NewBook:
       type: object
       required:
@@ -468,7 +453,3 @@ components:
           type: integer
         prev_page:
           type: integer
-  responses:
-    RecordNotFound:
-      description: Record not found
-      content:

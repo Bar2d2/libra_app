@@ -12,18 +12,18 @@ module API
         desc 'Upload a cover image for a book'
         params do
           requires :id, type: Integer, desc: 'ID of the book to upload the cover image'
-          requires :cover_image, type: File, desc: 'Cover image file to upload'
+          requires :cover, type: File, desc: 'Cover image file to upload'
         end
-        post ':id/upload_cover_image' do
+        post ':id/upload_cover' do
           book = Book.find(params[:id])
 
           # Make sure you update the bucket name and folder structure according to your S3 setup
           bucket = Aws::S3::Resource.new.bucket(Rails.application.credentials.s3[:bucket])
-          object = bucket.object("books/#{params[:id]}/cover_image/#{params[:cover_image][:filename]}")
+          object = bucket.object("books/#{params[:id]}/cover/#{params[:cover][:filename]}")
 
           begin
-            object.upload_file(params[:cover_image][:tempfile], acl: 'public-read', content_disposition: 'inline')
-            book.update(cover_image_url: object.public_url)
+            object.upload_file(params[:cover][:tempfile], acl: 'public-read', content_disposition: 'inline')
+            book.update(cover: object.public_url)
             { message: 'Cover image uploaded successfully' }
           rescue StandardError => e
             error!({ error: 'Failed to upload cover image', details: e.message }, 500)

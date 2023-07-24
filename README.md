@@ -36,11 +36,21 @@ Restful API was built upon Grape API framework, and documented using OpenAPI. Th
 
 ## Local Installation
 
-### 1. Set up your credentials with Master Key from the owner of this app
+### 1. Clone Github repo and install Ruby gems
+
+```sh
+git clone git@github.com:Bar2d2/libra_app.git
+cd libra_app
+gem install bundler
+bundle install
+yarn install
+```
+
+### 2. Set up your credentials with Master Key from the owner of this app
 
 The master.key file should live under the ```/app/config``` directory.
 
-### 2. Images upload is handle by AWS S3 service, if you would want to update the credentials with your own
+### 3. Images upload is handle by AWS S3 service, if you would want to update the credentials with your own
 
 ```sh
 rails credentials:edit
@@ -52,16 +62,6 @@ s3:
   region: <bucket-region>
   access_key_id: <your-access-key>
   secret_access_key: <your-secret-access-key>
-```
-
-### 3. Clone Github repo and install Ruby gems
-
-```sh
-git clone git@github.com:Bar2d2/libra_app.git
-cd libra_app
-gem install bundler
-bundle install
-yarn install
 ```
 
 ### 4. Set up database, migrations and seed data

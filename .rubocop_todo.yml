@@ -145,6 +145,7 @@ Style/StringLiterals:
     - 'features/support/env.rb'
     - 'lib/tasks/cucumber.rake'
     - 'spec/requests/static_spec.rb'
+    - 'db/schema.rb'
     - 'readme.md'
 
 # Offense count: 1

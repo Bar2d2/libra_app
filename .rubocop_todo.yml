@@ -97,6 +97,11 @@ Style/FrozenStringLiteralComment:
     - 'features/support/env.rb'
     - 'lib/tasks/cucumber.rake'
     - 'spec/requests/static_spec.rb'
+    - 'db/schema.rb'
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -140,6 +145,7 @@ Style/StringLiterals:
     - 'features/support/env.rb'
     - 'lib/tasks/cucumber.rake'
     - 'spec/requests/static_spec.rb'
+    - 'readme.md'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

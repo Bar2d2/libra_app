@@ -36,16 +36,35 @@ Restful API was built upon Grape API framework, and documented using OpenAPI. Th
 
 ## Local Installation
 
-### 1. Clone Github repo and install Ruby gems
+### 1. Set up your credentials with Master Key from the owner of this app
+
+The master.key file should live under the ```/app/config``` directory.
+
+### 2. Images upload is handle by AWS S3 service, if you would want to update the credentials with your own
+
+```sh
+rails credentials:edit
+```
+
+```sh
+s3:
+  bucket: <bucket-name>
+  region: <bucket-region>
+  access_key_id: <your-access-key>
+  secret_access_key: <your-secret-access-key>
+```
+
+### 3. Clone Github repo and install Ruby gems
 
 ```sh
 git clone git@github.com:Bar2d2/libra_app.git
 cd libra_app
 gem install bundler
 bundle install
+yarn install
 ```
 
-### 2. Set up database, migrations and seed data
+### 4. Set up database, migrations and seed data
 
 ```sh
 rake db:create
@@ -53,7 +72,7 @@ rake db:migrate
 rake db:seed
 ```
 
-### 3. Start Postgresql (they should be started on startup)
+### 5. Start Postgresql (they should be started on startup)
 
 #### For Mac users
 
@@ -73,25 +92,6 @@ Start services if required:
 
 ```sh
 sudo systemctl start postgres.service
-```
-### 4. Images upload is handle by AWS S3 service, if you want to update credentials
-
-```sh
-rails credentials:edit
-```
-
-```sh
-s3:
-  bucket: <bucket-name>
-  region: <bucket-region>
-  access_key_id: <your-access-key>
-  secret_access_key: <your-secret-access-key>
-```
-
-### 5. Launch Rails server
-
-```sh
-foreman start
 ```
 
 ### 6. Run the tests to know everthing is working fine
@@ -113,8 +113,12 @@ COVERAGE=on bundle exec rspec
 rubocop
 reek
 ```
+### 9. Launch Rails server
 
-### 9. API documentation - to see UI go to the
+```sh
+foreman start
+```
+### 10. API documentation - to see UI go to the
 
 [localhost:/3000/api-docs](http://localhost:3000/api-docs)
 

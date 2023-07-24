@@ -36,7 +36,7 @@ Restful API was built upon Grape API framework, and documented using OpenAPI. Th
 
 ## Local Installation
 
-### 1. Clone Github repo and install Ruby gems
+### 1. Clone Github repo and install Ruby gems, yarn and run build
 
 ```sh
 git clone git@github.com:Bar2d2/libra_app.git
@@ -44,6 +44,8 @@ cd libra_app
 gem install bundler
 bundle install
 yarn install
+yarn build
+yarn build:css
 ```
 
 ### 2. Set up your credentials with Master Key from the owner of this app
@@ -64,15 +66,7 @@ s3:
   secret_access_key: <your-secret-access-key>
 ```
 
-### 4. Set up database, migrations and seed data
-
-```sh
-rake db:create
-rake db:migrate
-rake db:seed
-```
-
-### 5. Start Postgresql (they should be started on startup)
+### 4. Start Postgresql (they should be started on startup)
 
 #### For Mac users
 
@@ -92,6 +86,14 @@ Start services if required:
 
 ```sh
 sudo systemctl start postgres.service
+```
+
+### 5. Set up database, migrations and seed data
+
+```sh
+rake db:create
+rake db:migrate
+rake db:seed
 ```
 
 ### 6. Run the tests to know everthing is working fine
